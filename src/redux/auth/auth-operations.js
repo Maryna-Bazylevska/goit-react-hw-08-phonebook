@@ -1,16 +1,16 @@
-import * as contactAPI from "../../services/phonebook-api";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import * as contactAPI from '../../services/phonebook-api';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 export const token = {
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   unset() {
-    axios.defaults.headers.common.Authorization = "";
+    axios.defaults.headers.common.Authorization = '';
   },
 };
 export const register = createAsyncThunk(
-  "auth/register",
+  'auth/register',
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await contactAPI.registerUser(credentials);
@@ -22,7 +22,7 @@ export const register = createAsyncThunk(
   }
 );
 export const logIn = createAsyncThunk(
-  "/auth/login",
+  '/auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await contactAPI.loginUser(credentials);
@@ -34,7 +34,7 @@ export const logIn = createAsyncThunk(
   }
 );
 export const logOut = createAsyncThunk(
-  "/auth/logout",
+  '/auth/logout',
   async (_, { rejectWithValue }) => {
     try {
       const data = await contactAPI.logoutUser();
@@ -46,7 +46,7 @@ export const logOut = createAsyncThunk(
   }
 );
 export const fetchCurrentUser = createAsyncThunk(
-  "auth/refresh",
+  'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
