@@ -9,17 +9,6 @@ export default function UserMenu() {
   return (
     <>
       <Wrapper>
-        <NavLink
-          end
-          to="/contacts"
-          style={({ isActive }) => ({
-            color: isActive ? '#dc0088' : 'white',
-            textDecoration: 'none',
-            paddingRight: 150,
-          })}
-        >
-          Contacts
-        </NavLink>
         <Span>Welcome, {name}</Span>
         <Button
           style={{
