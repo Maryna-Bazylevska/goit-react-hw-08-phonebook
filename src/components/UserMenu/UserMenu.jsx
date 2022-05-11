@@ -2,7 +2,7 @@ import { logOut } from '../../redux/auth/auth-operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsername } from '../../redux/auth/auth-selectors';
 import { Wrapper, Span, Button } from './UserMenu.styled';
-import { NavLink } from 'react-router-dom';
+
 export default function UserMenu() {
   const dispatch = useDispatch();
   const name = useSelector(getUsername);
