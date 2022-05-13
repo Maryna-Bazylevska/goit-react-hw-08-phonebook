@@ -6,15 +6,10 @@ import AuthNav from '../AuthNav/AuthNav';
 
 export default function AppBar() {
   const isLoggedIn = useSelector(getIsLoggedIn);
+  console.log('isLoggedIn', isLoggedIn);
   return (
     <Header>
-      {!isLoggedIn ? (
-        <>
-          <AuthNav />
-        </>
-      ) : (
-        <UserMenu />
-      )}
+      {!isLoggedIn ? <AuthNav /> : <UserMenu isLoggedIn={isLoggedIn} />}
     </Header>
   );
 }

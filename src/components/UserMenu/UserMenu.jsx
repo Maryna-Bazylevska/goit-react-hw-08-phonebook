@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsername } from '../../redux/auth/auth-selectors';
 import { Wrapper, Span, Button } from './UserMenu.styled';
 
-export default function UserMenu() {
+export default function UserMenu({ isLoggedIn }) {
   const dispatch = useDispatch();
   const name = useSelector(getUsername);
+
   return (
     <>
       <Wrapper>
@@ -18,7 +19,7 @@ export default function UserMenu() {
           type="button"
           onClick={() => dispatch(logOut())}
         >
-          SignOut
+          LogOut
         </Button>
       </Wrapper>
     </>

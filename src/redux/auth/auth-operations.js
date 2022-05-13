@@ -54,12 +54,26 @@ export const fetchCurrentUser = createAsyncThunk(
     if (!persistedToken) {
       return thunkAPI.rejectWithValue();
     }
-    token.set(persistedToken);
-    try {
-      const data = await contactAPI.getCurrentUser(persistedToken);
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue();
-    }
+
+    const response = await contactAPI.getCurrentUser(persistedToken);
+    return response;
   }
 );
+// export const fetchCurrentUser = createAsyncThunk(
+//   'auth/refresh',
+//   async (_, thunkAPI) => {
+//     const state = thunkAPI.getState();
+//     const persistedToken = state.auth.token;
+
+//     if (!persistedToken) {
+//       return thunkAPI.rejectWithValue();
+//     }
+//     token.set(persistedToken);
+//     try {
+//       const data = await contactAPI.getCurrentUser(persistedToken);
+//       return data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue();
+//     }
+//   }
+// );
