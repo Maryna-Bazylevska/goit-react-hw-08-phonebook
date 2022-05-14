@@ -1,14 +1,15 @@
 import { fetchCurrentUser } from './redux/auth/auth-operations';
 import { Wrapper } from './App.styled';
 import { useEffect, lazy, Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
-import AppBar from './components/AppBar/AppBar';
+
 import { Toaster } from 'react-hot-toast';
-const HomeView = lazy(() => import('./views/Homeview/HomeView'));
+const Layout = lazy(() => import('views/Layout/Layout'));
+const Errorview = lazy(() => import('./views/Errorview/Errorview'));
 const RegisterView = lazy(() => import('./views/RegisterView/RegisterView'));
 const LoginView = lazy(() => import('./views/LoginView/LoginView'));
 const ContactsView = lazy(() => import('./views/ContactsView/ContactsView'));
@@ -27,8 +28,6 @@ export default function App() {
         <h1>Show React Skeleton</h1>
       ) : (
         <>
-          <AppBar />
-
           <Suspense
             fallback={
               <p>
@@ -37,33 +36,26 @@ export default function App() {
             }
           >
             <Routes>
-              <Route
-                path="register"
-                element={
-                  <PublicRoute restricted redirectTo="/contacts">
-                    <RegisterView />
-                  </PublicRoute>
-                }
-              />
-              <Route
-                path="login"
-                element={
-                  <PublicRoute restricted redirectTo="/contacts">
-                    <LoginView />
-                  </PublicRoute>
-                }
-              />
-              <Route
-                path="contacts"
-                element={
-                  <PrivateRoute redirectTo="/login">
-                    <ContactsView />
-                  </PrivateRoute>
-                }
-              />
+              <Route path="*" element={<Errorview />} />
+              <Route path="/" element={<Layout />}>
+                <Route
+                  path="register"
+                  element={<PublicRoute component={RegisterView} restricted />}
+                />
+                <Route
+                  path="login"
+                  element={<PublicRoute component={LoginView} restricted />}
+                />
+                <Route
+                  path="404"
+                  element={<PublicRoute component={Errorview} />}
+                />
 
-              <Route path="/" element={<HomeView />} />
-              <Route path="*" element={<Navigate to="/" />} />
+                <Route
+                  path="contacts"
+                  element={<PrivateRoute component={ContactsView} />}
+                />
+              </Route>
             </Routes>
             <Toaster />
           </Suspense>
