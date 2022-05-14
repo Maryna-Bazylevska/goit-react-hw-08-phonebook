@@ -1,17 +1,17 @@
-import { fetchCurrentUser } from "./redux/auth/auth-operations";
-import { Wrapper } from "./App.styled";
-import { useEffect, lazy, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
-import PublicRoute from "./routes/PublicRoute";
-import PrivateRoute from "./routes/PrivateRoute";
-import AppBar from "./components/AppBar/AppBar";
-import { Toaster } from "react-hot-toast";
-const HomeView = lazy(() => import("./views/Homeview/HomeView"));
-const RegisterView = lazy(() => import("./views/RegisterView/RegisterView"));
-const LoginView = lazy(() => import("./views/LoginView/LoginView"));
-const ContactsView = lazy(() => import("./views/ContactsView/ContactsView"));
+import { fetchCurrentUser } from './redux/auth/auth-operations';
+import { Wrapper } from './App.styled';
+import { useEffect, lazy, Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import PublicRoute from './routes/PublicRoute';
+import PrivateRoute from './routes/PrivateRoute';
+import AppBar from './components/AppBar/AppBar';
+import { Toaster } from 'react-hot-toast';
+const HomeView = lazy(() => import('./views/Homeview/HomeView'));
+const RegisterView = lazy(() => import('./views/RegisterView/RegisterView'));
+const LoginView = lazy(() => import('./views/LoginView/LoginView'));
+const ContactsView = lazy(() => import('./views/ContactsView/ContactsView'));
 
 export default function App() {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export default function App() {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
-  const isFetchingCurrentUser = useSelector((state) => state.isFetchingCurrent);
+  const isFetchingCurrentUser = useSelector(state => state.isFetchingCurrent);
   return (
     <Wrapper>
       {isFetchingCurrentUser ? (
@@ -28,6 +28,7 @@ export default function App() {
       ) : (
         <>
           <AppBar />
+
           <Suspense
             fallback={
               <p>
@@ -38,18 +39,31 @@ export default function App() {
             <Routes>
               <Route
                 path="register"
-                element={<PublicRoute component={RegisterView} restricted />}
+                element={
+                  <PublicRoute restricted redirectTo="/contacts">
+                    <RegisterView />
+                  </PublicRoute>
+                }
               />
               <Route
                 path="login"
-                element={<PublicRoute component={LoginView} restricted />}
+                element={
+                  <PublicRoute restricted redirectTo="/contacts">
+                    <LoginView />
+                  </PublicRoute>
+                }
               />
               <Route
                 path="contacts"
-                element={<PrivateRoute component={ContactsView} />}
+                element={
+                  <PrivateRoute redirectTo="/login">
+                    <ContactsView />
+                  </PrivateRoute>
+                }
               />
-              <Route path="home" element={<HomeView />} />
-              <Route path="*" element={<Navigate to="home" />} />
+
+              <Route path="/" element={<HomeView />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
             <Toaster />
           </Suspense>

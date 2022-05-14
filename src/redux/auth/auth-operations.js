@@ -35,9 +35,9 @@ export const logIn = createAsyncThunk(
 );
 export const logOut = createAsyncThunk(
   '/auth/logout',
-  async (_, { rejectWithValue }) => {
+  async (credentials, { rejectWithValue }) => {
     try {
-      const data = await contactAPI.logoutUser();
+      const data = await contactAPI.logoutUser(credentials);
       token.set(data.token);
       return data;
     } catch (error) {
@@ -54,8 +54,12 @@ export const fetchCurrentUser = createAsyncThunk(
     if (!persistedToken) {
       return thunkAPI.rejectWithValue();
     }
-
-    const response = await contactAPI.getCurrentUser(persistedToken);
-    return response;
+    token.set(persistedToken);
+    try {
+      const data = await contactAPI.getCurrentUser(persistedToken);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue();
+    }
   }
 );
