@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -25,4 +25,15 @@ export const Button = styled.button`
 
     color: #fff;
   }
+`;
+export const ButtonContacts = styled.button`
+  font-size: 25px;
+  padding: 5px;
+  margin: 7px 75px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  background-color: pink;
+  color: #af2c4d;
+  cursor: pointer;
 `;
